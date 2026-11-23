@@ -152,6 +152,9 @@
      column plus both nav lists, they appear in the side margins. Narrower
      screens (phones, portrait tablets) just get the column. */
   @media (min-width: 58em) {
+    main {
+      max-width: min(64em, calc(100% - 13em));
+    }
     nav.navigation {
       display: block;
       position: fixed;
@@ -177,7 +180,7 @@
   /* Tune notation. Songs that have a tune file get a staff above the words
      (verse 1 is set under the notes, the other verses follow as text). */
   .hymn.has-tune {
-    width: min(100%, 40em);
+    width: 100%;
     transform: none;
   }
   .hymn.has-tune > h2.song {
@@ -17026,15 +17029,19 @@
       });
     }
 
-    // Spacing is tuned per song (see "sp" in tunes/songs.json): word lengths
-    // differ a lot between songs. Each entry is
+    // Spacing is tuned per song and per screen width (see "sp" in
+    // tunes/songs.json): word lengths differ a lot between songs, and a wider
+    // staff can hold more measures per line. Each entry is
     // [minSpacing, maxSpacing, measures per line, lyric font size].
-    var DEFAULT_SP = [1.8, 2.2, 4, 12];
+    function band(width) {
+      return width < 480 ? "narrow" : width < 760 ? "mid" : width < 900 ? "wide" : "xwide";
+    }
+    var DEFAULT_SP = { narrow: [1.8, 2.2, 2, 11], mid: [1.8, 2.2, 3, 12], wide: [1.8, 2.2, 4, 12], xwide: [1.8, 2.2, 5, 12] };
 
     function draw(box, info) {
       Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
-        var narrow = box.clientWidth < 480;
-        var sp = (info.sp && info.sp[narrow ? "narrow" : "wide"]) || (narrow ? [1.8, 2.2, 2, 12] : DEFAULT_SP);
+        var b = band(box.clientWidth), narrow = b === "narrow";
+        var sp = (info.sp && info.sp[b]) || DEFAULT_SP[b];
         // vocalspace < 0 pulls the words up close under the staff
         var abc = "%%vocalspace -8\n%%vocalfont Times " + sp[3] + " normal\n" + res[1].replace(/^T:.*\n/m, "");
         info.w.forEach(function (w, i) {

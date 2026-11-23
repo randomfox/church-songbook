@@ -10,17 +10,29 @@
    "See, dea-rest Lord, our wil-ling souls Ac-cept Thine of-fered grace; We bless the great Re-dee-mer's love, And give the Fa-ther praise."
   ],
   "sp": {
-   "wide": [
-    1.8,
-    2.2,
-    3,
-    12
-   ],
    "narrow": [
     1.8,
     2.2,
     2,
     10
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
+   "wide": [
+    1.8,
+    2.2,
+    4,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
+    12
    ]
   }
  },
@@ -33,16 +45,28 @@
    "Come, all ye wretch-ed sin-ners, come, He'll form your souls a-new; Hsi Gos-pel and His heart have room For * re-bels such as you."
   ],
   "sp": {
+   "narrow": [
+    1.8,
+    2.2,
+    2,
+    11
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
    "wide": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "xwide": [
     1.8,
     2.2,
-    2,
+    6,
     11
    ]
   }
@@ -58,16 +82,28 @@
    "So will we ren-der praise To Thee, the God of love; With plea-sure walk in all Thy ways, Till we shall meet a-bove."
   ],
   "sp": {
-   "wide": [
+   "narrow": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "mid": [
     1.8,
     2.2,
     3,
+    12
+   ],
+   "wide": [
+    1.8,
+    2.2,
+    5,
+    11
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
     12
    ]
   }
@@ -84,17 +120,29 @@
    "\"Glo-ry to God, from whom on high All gra-cious mer-cies flow! Who sends His heav'n-des-cen-ded peace, To * dwell with man be-low.\""
   ],
   "sp": {
-   "wide": [
-    1.8,
-    2.2,
-    3,
-    11
-   ],
    "narrow": [
     1.8,
     2.2,
     2,
     10
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    11
+   ],
+   "wide": [
+    1.8,
+    2.2,
+    4,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
+    12
    ]
   }
  },
@@ -108,17 +156,29 @@
    "Come, Ho-ly Spir-it, heav'n-ly Dove, With all Thy quick-'ning pow'rs; Come, shed ab-road a Sa-viour's love, And * that shall kin-dle ours."
   ],
   "sp": {
-   "wide": [
+   "narrow": [
+    1.8,
+    2.2,
+    3,
+    10
+   ],
+   "mid": [
     1.8,
     2.2,
     3,
     11
    ],
-   "narrow": [
+   "wide": [
     1.8,
     2.2,
-    2,
-    11
+    4,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
+    12
    ]
   }
  },
@@ -133,16 +193,28 @@
    "We pray that you may ear-ly prove The Spi-rit's pow'r to teach; You can-not be too young to love That Je-sus, whom we preach."
   ],
   "sp": {
-   "wide": [
+   "narrow": [
+    1.4,
+    2,
+    2,
+    11
+   ],
+   "mid": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "wide": [
+    1.8,
+    2.2,
+    4,
+    12
+   ],
+   "xwide": [
     1.4,
     2,
-    2,
+    6,
     11
    ]
   }
@@ -156,17 +228,29 @@
    "Fight on, my soul, till death Shall bring thee to thy God; He'll take thee at thy par-ting breath, Up to His blest a-bode."
   ],
   "sp": {
-   "wide": [
-    1.8,
-    2.2,
-    3,
-    12
-   ],
    "narrow": [
     1.4,
     2,
     3,
     11
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
+   "wide": [
+    1.8,
+    2.2,
+    5,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
+    12
    ]
   }
  },
@@ -181,16 +265,28 @@
    "\"Poor tem-pest toss-ed soul, be still, My pro-mised grace re-ceive;\" 'tis Je-sus speaks I must I will, I can I do be-lieve."
   ],
   "sp": {
+   "narrow": [
+    1.8,
+    2.2,
+    2,
+    12
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
    "wide": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "xwide": [
     1.8,
     2.2,
-    2,
+    6,
     12
    ]
   }
@@ -203,17 +299,29 @@
    "Then while 'tis called to-day, O hear the Gos-pel sound; Come, sin-ner, haste O haste a-way, While par-don may be found!"
   ],
   "sp": {
-   "wide": [
+   "narrow": [
+    1.8,
+    2.2,
+    3,
+    10
+   ],
+   "mid": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "wide": [
     1.8,
     2.2,
-    3,
-    11
+    5,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
+    12
    ]
   }
  },
@@ -230,17 +338,29 @@
    "Lord, though we are but feeb-le men, Yet since Thy Word is past, We'll ven-ture through a thou-sand storms, To * see Thy face at last."
   ],
   "sp": {
-   "wide": [
-    1.8,
-    2.2,
-    3,
-    12
-   ],
    "narrow": [
     1.8,
     2.2,
     3,
     11
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
+   "wide": [
+    1.8,
+    2.2,
+    4,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    6,
+    12
    ]
   }
  },
@@ -255,17 +375,29 @@
    "Dear Lord, ac-cept the praise Of these our hum-ble songs, Till tunes of nob-ler sounds we raise, With our im-mor-tal tongues."
   ],
   "sp": {
-   "wide": [
-    1.8,
-    2.2,
-    3,
-    12
-   ],
    "narrow": [
     1.8,
     2.2,
     2,
     12
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
+   "wide": [
+    1.8,
+    2.2,
+    5,
+    11
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
+    11
    ]
   }
  },
@@ -280,17 +412,29 @@
    "His words the hap-py pa-rents hear, And shout with joy di-vine: Dear Sa-viour, all we have and are, Shall * be fo-re-ver Thine."
   ],
   "sp": {
-   "wide": [
+   "narrow": [
+    1.8,
+    2.2,
+    2,
+    10
+   ],
+   "mid": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "wide": [
     1.8,
     2.2,
-    3,
-    10.5
+    4,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    6,
+    12
    ]
   }
  },
@@ -302,17 +446,29 @@
    "O! to grace how great a deb-tor, Dai-ly I'm con-strained to be; Let Thy good-ness like a fet-ter, Bind my wan-d'ring heart to Thee; Prone to * wan-der, Lord, I feel * it; Prone to * leave the God I love Here's my heart, O take and seal it: Seal it for Thy courts a-bove."
   ],
   "sp": {
-   "wide": [
-    1.8,
-    2.2,
-    3,
-    12
-   ],
    "narrow": [
     1.8,
     2.2,
     2,
     11
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
+   "wide": [
+    1.8,
+    2.2,
+    4,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    6,
+    12
    ]
   }
  },
@@ -326,16 +482,28 @@
    "The joy Thy fa-vor gives, Let me a-gain ob-tain; And Thy free Spi-rit's firm sup-port My fain-ting soul sus-tain."
   ],
   "sp": {
-   "wide": [
+   "narrow": [
+    1.8,
+    2.2,
+    3,
+    10
+   ],
+   "mid": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "wide": [
     1.8,
     2.2,
-    3,
+    5,
+    11
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
     12
    ]
   }
@@ -357,17 +525,29 @@
    "To ga-ther home His own, God shall His an-gels send, And bid our bliss on eath be-gun, In deat-hless tri-umphs end."
   ],
   "sp": {
-   "wide": [
-    1.8,
-    2.2,
-    3,
-    12
-   ],
    "narrow": [
     1.8,
     2.2,
     3,
     11
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
+   "wide": [
+    1.4,
+    2,
+    4,
+    12
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    6,
+    12
    ]
   }
  },
@@ -381,17 +561,29 @@
    "To-day the Gos-pel calls to-day, Sin-ners, it speaks to you; Let ev-'ry one for-sake his way, And * mer-cy will en-sue."
   ],
   "sp": {
+   "narrow": [
+    1.8,
+    2.2,
+    3,
+    11
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
    "wide": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "xwide": [
     1.8,
     2.2,
-    3,
-    11
+    5,
+    12
    ]
   }
  },
@@ -405,16 +597,28 @@
    "Oh, won-drous love! to bleed and die, To bear the cross and shame, That guil-ty sin-ners, such as I, Might plead Thy gra-cious name."
   ],
   "sp": {
+   "narrow": [
+    1.8,
+    2.2,
+    2,
+    12
+   ],
+   "mid": [
+    1.8,
+    2.2,
+    3,
+    12
+   ],
    "wide": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
+   "xwide": [
     1.8,
     2.2,
-    2,
+    6,
     12
    ]
   }
@@ -429,16 +633,28 @@
    "Lord God of truth and grace! Teach us that death to shun; Lest we be ba-nished from Thy face, And e-ver-more un-done."
   ],
   "sp": {
-   "wide": [
+   "narrow": [
+    1.4,
+    2,
+    3,
+    11
+   ],
+   "mid": [
     1.8,
     2.2,
     3,
     12
    ],
-   "narrow": [
-    1.4,
-    2,
-    3,
+   "wide": [
+    1.8,
+    2.2,
+    5,
+    11
+   ],
+   "xwide": [
+    1.8,
+    2.2,
+    5,
     11
    ]
   }

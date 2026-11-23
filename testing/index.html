@@ -17017,7 +17017,8 @@
 
     function draw(box, info) {
       Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
-        var abc = res[1].replace(/^T:.*\n/m, "");
+        // vocalspace < 0 pulls the words up close under the staff
+        var abc = "%%vocalspace -8\n" + res[1].replace(/^T:.*\n/m, "");
         if (info.w) abc += "w: 1.~" + info.w + "\n";
         var narrow = box.clientWidth < 480;
         var scale = narrow ? 0.7 : 0.85;

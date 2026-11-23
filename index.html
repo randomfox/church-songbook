@@ -109,6 +109,26 @@
       font-size: 1em;
     }
   }
+
+  /* Dark mode: follows the device setting */
+  :root {
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: #1c1d21;
+      color: #e4e0d6;
+    }
+    a {
+      color: #8ab4f8;
+    }
+    a:visited {
+      color: #b69cf0;
+    }
+    #jump {
+      background: #1c1d21;
+    }
+  }
   </style>
 </head>
 <body>

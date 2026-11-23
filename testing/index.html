@@ -173,6 +173,36 @@
       right: 0.5em;
     }
   }
+
+  /* Tune notation. Songs that have a tune file get a staff above the words
+     (verse 1 is set under the notes, the other verses follow as text). */
+  .hymn.has-tune {
+    width: min(100%, 40em);
+    transform: none;
+  }
+  .hymn.has-tune > h2.song {
+    margin-right: 0;
+  }
+  .score {
+    color: var(--fg);
+    min-height: 9em; /* reserved until the staff is drawn */
+    margin: 0.25em 0 0.75em;
+  }
+  .score svg {
+    display: block;
+    width: 100%;
+  }
+  .score svg path, .score svg text {
+    fill: currentColor;
+  }
+  .v1 {
+    display: none; /* verse 1 now lives under the notes */
+  }
+  .credits {
+    margin: 3em 0 2em;
+    font-size: 0.8em;
+    text-align: center;
+  }
   </style>
 </head>
 <body>
@@ -16863,6 +16893,138 @@
       input.setCustomValidity("");
     }
   });
+</script>
+<p class="credits">Tune notation: melodies from the <a href="http://openhymnal.org/">Open Hymnal Project</a> (public domain), drawn with <a href="https://www.abcjs.net/">abcjs</a>.</p>
+<script>
+  /* Tune notation: only runs for songs listed in tunes/songs.json, and only
+     loads the notation library once the first such song is near the screen. */
+  (function () {
+    var libPromise = null;
+    var tunes = {};
+
+    function loadLib() {
+      if (!libPromise) {
+        libPromise = new Promise(function (resolve, reject) {
+          var s = document.createElement("script");
+          s.src = "lib/abcjs-basic-min.js";
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      }
+      return libPromise;
+    }
+
+    function loadTune(name) {
+      if (!tunes[name]) {
+        tunes[name] = fetch("tunes/" + name + ".abc").then(function (r) {
+          if (!r.ok) throw new Error(name);
+          return r.text();
+        });
+      }
+      return tunes[name];
+    }
+
+    // Wrap the first stanza (everything up to the first blank line) so it can
+    // be hidden once it is shown under the notes.
+    function hideFirstStanza(p) {
+      var nodes = Array.prototype.slice.call(p.childNodes);
+      var lastWasBr = false, end = -1;
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (n.nodeName === "BR") {
+          if (lastWasBr) { end = i; break; }
+          lastWasBr = true;
+        } else if (n.nodeType !== 3 || n.textContent.trim()) {
+          lastWasBr = false;
+        }
+      }
+      if (end < 0) return;
+      var wrap = document.createElement("span");
+      wrap.className = "v1";
+      p.insertBefore(wrap, nodes[0]);
+      for (i = 0; i <= end; i++) wrap.appendChild(nodes[i]);
+    }
+
+    // Drawing staves changes the page height, which can knock a #25-style
+    // jump off target. Until the reader scrolls on their own, keep the jump
+    // target pinned to where it was asked to be.
+    var pending = null, pendingTimer = 0, settleTimer = 0;
+
+    function setPending(hash) {
+      var el = hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+      pending = el;
+      clearTimeout(pendingTimer);
+      if (el) {
+        pendingTimer = setTimeout(function () { pending = null; }, 5000);
+        // pages above the target may still be changing height; re-check a few times
+        [100, 400, 900, 1600].forEach(function (ms) {
+          setTimeout(function () { if (pending === el) el.scrollIntoView(); }, ms);
+        });
+      }
+    }
+
+    function settle() {
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(function () {
+        if (pending) pending.scrollIntoView();
+      }, 150);
+    }
+
+    ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (ev) {
+      window.addEventListener(ev, function () { pending = null; }, { passive: true });
+    });
+    window.addEventListener("hashchange", function () { setPending(location.hash); });
+    setPending(location.hash);
+
+    function draw(box, info) {
+      Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
+        var abc = res[1].replace(/^T:.*\n/m, "");
+        if (info.w) abc += "w: " + info.w + "\n";
+        var narrow = box.clientWidth < 480;
+        var scale = narrow ? 0.7 : 0.85;
+        ABCJS.renderAbc(box, abc, {
+          responsive: "resize",
+          scale: scale,
+          staffwidth: box.clientWidth / scale,
+          paddingleft: 0, paddingright: 0, paddingtop: 0, paddingbottom: 0,
+          wrap: { minSpacing: 1.8, maxSpacing: 2.7, preferredMeasuresPerLine: narrow ? 2 : 4 }
+        });
+        box.style.minHeight = "0";
+        if (info.w) hideFirstStanza(box.parentNode.querySelector("p.songs"));
+        settle();
+        box.setAttribute("role", "img");
+        box.setAttribute("aria-label", "Tune " + info.tune + (info.w ? ", verse 1: " + info.w.replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));
+      }).catch(function () {
+        box.remove();
+        box.parentNode && box.parentNode.classList.remove("has-tune");
+      });
+    }
+
+    fetch("tunes/songs.json").then(function (r) {
+      return r.ok ? r.json() : {};
+    }).then(function (map) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            io.unobserve(e.target);
+            draw(e.target, e.target._info);
+          }
+        });
+      }, { rootMargin: "800px 0px" });
+      document.querySelectorAll(".hymn").forEach(function (h) {
+        var info = map[h.querySelector("h2.song").id];
+        if (!info) return;
+        var box = document.createElement("div");
+        box.className = "score";
+        box._info = info;
+        h.classList.add("has-tune");
+        h.insertBefore(box, h.querySelector("p.songs"));
+        io.observe(box);
+      });
+      settle(); // the placeholders moved the jump target
+    }).catch(function () {});
+  })();
 </script>
 </body>
 </html>

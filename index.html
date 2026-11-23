@@ -6,22 +6,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="plain weaverland conference mennonite church songbook">
   <meta name="keyword" content="song, songs, songbook, weaverland conference, weaverland, church, conference">
-  <style type="text/css" media="screen">
+  <style media="screen">
+  /* Colors: light is the default; dark follows the device setting. */
+  :root {
+    color-scheme: light dark;
+    --bg: #b9b9b9;
+    --fg: #000;
+    --link: #00e;
+    --visited: #551a8b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1d21;
+      --fg: #e4e0d6;
+      --link: #8ab4f8;
+      --visited: #b69cf0;
+    }
+  }
+
   * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
   }
   body {
-    background-color: #B9B9B9;
+    background-color: var(--bg);
+    color: var(--fg);
     font-size: 12pt;
     margin-left: 1em;
   }
-  div.main_page {
-    margin-left: 5px;
-    text-align: left;
+  a:link { color: var(--link); }
+  a:visited { color: var(--visited); }
+  ul {
+    list-style: none;
   }
-  /* Let the browser skip layout/paint for off-screen songs; the page
-     opens fast and each song renders as you scroll to it. */
+  nav {
+    display: none;
+  }
+
+  /* Songs. Each song is an <h2 class="song" id="..."> followed by a
+     <p class="songs">; the ids are the anchor targets for #25, #A30, etc. */
+  h2.song {
+    padding-bottom: 1px;
+  }
+  h2.section_header {
+    padding-top: 5px;
+    padding-left: 10px;
+  }
+
+  /* Skip layout/paint for off-screen songs; the page opens fast and each
+     song renders as you scroll to it. 33em is the measured average height. */
   p.songs {
     content-visibility: auto;
     contain-intrinsic-size: auto 33em;
@@ -32,45 +65,23 @@
   span > span {
     padding-left: 1em;
   }
-  h2.song {
-    padding-top: 0px;
-    padding-bottom: 1px;
-    text-align: left;
-  }
-  h2.section_header {
-  padding-top: 5px;
-  padding-left: 10px;
-  text-align: left;
-  }
-  h2.s1 {
-    padding-top: 0px;
-  }
-  ul {
-    list-style: none;
-  }
-  nav {
-    display: none;
-  }
-  i {
-    font-size: 0.9em;
-    text-transform: uppercase;
-  }
-  b {
-    font-size: 1.3em;
-  }
-  font {
-    font-size: 1.3em;
-  }
   h2 > span {
     font-size: 0.65em;
     text-transform: uppercase;
     padding-left: 0.5em;
   }
+  i {
+    font-size: 0.9em;
+    text-transform: uppercase;
+  }
+  b, font {
+    font-size: 1.3em;
+  }
 
+  /* Desktop: fixed side navigation, songs in the middle */
   @media (min-width: 1024px) {
-    /* For desktop */
     body {
-      margin: 0px;
+      margin: 0;
     }
     nav.navigation {
       padding-top: 5px;
@@ -79,9 +90,6 @@
     }
     li {
       margin: 3px;
-    }
-    #to_appendix {
-      margin-left: 0px;
     }
     #left-nav {
       padding-left: 0.5em;
@@ -93,40 +101,13 @@
     }
     main {
       padding-left: 35%;
-      text-align: left;
-    }
-    .hanging_indent {
-      padding-left: 20px;
-      text-indent: 20px;
     }
     h2 > span {
       padding-left: 3em;
-      font-size: 0.65em;
-      text-transform: uppercase;
     }
     .breathing {
       padding-left: 2em;
       font-size: 1em;
-    }
-  }
-
-  /* Dark mode: follows the device setting */
-  :root {
-    color-scheme: light dark;
-  }
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: #1c1d21;
-      color: #e4e0d6;
-    }
-    a {
-      color: #8ab4f8;
-    }
-    a:visited {
-      color: #b69cf0;
-    }
-    #jump {
-      background: #1c1d21;
     }
   }
   </style>

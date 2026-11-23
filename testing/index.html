@@ -195,8 +195,8 @@
   .score svg path, .score svg text {
     fill: currentColor;
   }
-  /* Like a printed hymnal: verse 1 is under the notes, the remaining verses
-     are numbered and set flush left under the staff. */
+  /* Like a printed hymnal: the verses are set under the notes. Any verse that
+     could not be fitted to the music is numbered and set under the staff. */
   .hymn.has-tune > p.songs {
     width: auto;
     margin: 0;
@@ -219,7 +219,7 @@
     font-weight: bold;
   }
   .v1 {
-    display: none; /* verse 1 now lives under the notes */
+    display: none; /* this verse now lives under the notes */
   }
   .credits {
     margin: 3em 0 2em;
@@ -16948,9 +16948,9 @@
       return tunes[name];
     }
 
-    // Split the words into numbered stanzas. When verse 1 is set under the
-    // notes, its text is kept (hidden) and numbering starts at 2.
-    function layoutStanzas(p, firstIsUnderNotes) {
+    // Split the words into numbered stanzas. A stanza that is set under the
+    // notes keeps its text (hidden); the others are shown below the staff.
+    function layoutStanzas(p, underlay) {
       var nodes = Array.prototype.slice.call(p.childNodes);
       var stanzas = [], cur = [], lastWasBr = false;
       nodes.forEach(function (n) {
@@ -16965,7 +16965,7 @@
       stanzas.push(cur);
       p.textContent = "";
       var num = 0;
-      stanzas.forEach(function (nodesOfStanza) {
+      stanzas.forEach(function (nodesOfStanza, idx) {
         while (nodesOfStanza.length) {
           var t = nodesOfStanza[nodesOfStanza.length - 1];
           if (t.nodeName === "BR" || (t.nodeType === 3 && !t.textContent.trim())) nodesOfStanza.pop();
@@ -16974,7 +16974,7 @@
         if (!nodesOfStanza.length) return;
         num++;
         var d = document.createElement("div");
-        d.className = "stanza" + (num === 1 && firstIsUnderNotes ? " v1" : "");
+        d.className = "stanza" + (underlay[idx] ? " v1" : "");
         var label = document.createElement("span");
         label.className = "vnum";
         label.textContent = num + ".";
@@ -17019,7 +17019,9 @@
       Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
         // vocalspace < 0 pulls the words up close under the staff
         var abc = "%%vocalspace -8\n" + res[1].replace(/^T:.*\n/m, "");
-        if (info.w) abc += "w: 1.~" + info.w + "\n";
+        info.w.forEach(function (w, i) {
+          if (w) abc += "w: " + (i + 1) + ".~" + w + "\n";
+        });
         var narrow = box.clientWidth < 480;
         var scale = narrow ? 0.7 : 0.85;
         ABCJS.renderAbc(box, abc, {
@@ -17030,10 +17032,10 @@
           wrap: { minSpacing: 1.8, maxSpacing: 2.7, preferredMeasuresPerLine: narrow ? 2 : 4 }
         });
         box.style.minHeight = "0";
-        layoutStanzas(box.parentNode.querySelector("p.songs"), !!info.w);
+        layoutStanzas(box.parentNode.querySelector("p.songs"), info.w);
         settle();
         box.setAttribute("role", "img");
-        box.setAttribute("aria-label", "Tune " + info.tune + (info.w ? ", verse 1: " + info.w.replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));
+        box.setAttribute("aria-label", "Tune " + info.tune + (info.w[0] ? ", verse 1: " + info.w[0].replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));
       }).catch(function () {
         box.remove();
         box.parentNode && box.parentNode.classList.remove("has-tune");

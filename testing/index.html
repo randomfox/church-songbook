@@ -69,11 +69,9 @@
 
   /* Songs. Each song is an <h2 class="song" id="..."> followed by a
      <p class="songs">; the ids are the anchor targets for #25, #A30, etc. */
-  /* Song heading: number on the left, meter in the middle, tune name on the
-     right. The number and tune share the free space equally, so the meter
-     sits dead center. The tune never wraps; if it is long, the number's side
-     shrinks and the meter shifts left to make room. On a very narrow screen
-     where even that is not enough, the tune drops to its own line. */
+  /* Song heading: number on the left, tune name on the right, and the meter
+     centered in the gap between them. The tune never wraps; on a very narrow
+     screen where it cannot fit on the line it drops to its own line. */
   h2.song {
     display: flex;
     flex-wrap: wrap;
@@ -81,15 +79,15 @@
     column-gap: 0.75em;
     padding-bottom: 1px;
   }
-  h2.song > .num, h2.song > .tune {
-    flex: 1 1 0;
+  h2.song > .num, h2.song > .tune, h2.song > .meter {
     white-space: nowrap;
-  }
-  h2.song > .tune {
-    text-align: right;
   }
   h2.song > .meter {
-    white-space: nowrap;
+    flex: 1;
+    text-align: center;
+  }
+  h2.song > .tune {
+    margin-left: auto;
   }
   h2.song > .meter, h2.song > .tune {
     font-size: 0.65em;
@@ -107,6 +105,18 @@
     width: fit-content;
     max-width: 100%;
     margin-inline: auto;
+  }
+  /* Lines are ragged, so most are ~3em shorter than the longest one that
+     sets the song's width. On screens with room, nudge the song right by half
+     of that so the bulk of the text sits in the middle, and end the heading
+     where the typical line ends instead of at the longest one. */
+  @media (min-width: 42em) {
+    .hymn {
+      transform: translateX(1.5em);
+    }
+    .hymn > h2.song {
+      margin-right: 3em;
+    }
   }
   /* If the heading is wider than the lyrics, keep the lyrics centered. */
   .hymn > p.songs {

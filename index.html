@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Church Songbook</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="plain weaverland conference mennonite church songbook">
   <meta name="keyword" content="song, songs, songbook, weaverland conference, weaverland, church, conference">
   <style type="text/css" media="screen">
@@ -19,6 +20,12 @@
     margin-left: 5px;
     text-align: left;
   }
+  /* Let the browser skip layout/paint for off-screen songs; the page
+     opens fast and each song renders as you scroll to it. */
+  p.songs {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 33em;
+  }
   p.songs > span {
     padding-left: 2em;
   }
@@ -28,7 +35,6 @@
   h2.song {
     padding-top: 0px;
     padding-bottom: 1px;
-    font-size: 125em:
     text-align: left;
   }
   h2.section_header {
@@ -62,7 +68,7 @@
   }
 
   @media (min-width: 1024px) {
-    <!-- For desktop -->
+    /* For desktop */
     body {
       margin: 0px;
     }

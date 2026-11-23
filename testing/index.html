@@ -32,7 +32,7 @@
     background-color: var(--bg);
     color: var(--fg);
     font-size: 12pt;
-    margin-left: 1em;
+    padding-inline: 1em;
   }
   a:link { color: var(--link); }
   a:visited { color: var(--visited); }
@@ -41,6 +41,11 @@
   }
   nav {
     display: none;
+  }
+  /* The songs sit in a centered column that shrinks with the screen. */
+  main {
+    max-width: 40em;
+    margin-inline: auto;
   }
 
   /* "Go to song" box */
@@ -99,29 +104,29 @@
     font-size: 1.3em;
   }
 
-  /* Desktop: fixed side navigation, songs in the middle */
-  @media (min-width: 1024px) {
-    body {
-      margin: 0;
-    }
+  /* Wide screens (desktops, landscape tablets): once there is room for the
+     column plus both nav lists, they appear in the side margins. Narrower
+     screens (phones, portrait tablets) just get the column. */
+  @media (min-width: 58em) {
     nav.navigation {
-      padding-top: 5px;
-      position: fixed;
       display: block;
+      position: fixed;
+      top: 0;
+      padding-top: 5px;
+      max-height: 100vh;
+      max-height: 100dvh;
+      overflow-y: auto;
+      text-align: center;
     }
     li {
       margin: 3px;
     }
     #left-nav {
+      left: 0;
       padding-left: 0.5em;
-      text-align: center;
     }
     #right-nav {
       right: 0.5em;
-      text-align: center;
-    }
-    main {
-      padding-left: 35%;
     }
     h2 > span {
       padding-left: 3em;

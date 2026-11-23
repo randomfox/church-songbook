@@ -16922,7 +16922,7 @@
 </script>
 <p class="credits">Tune notation: melodies from the <a href="http://openhymnal.org/">Open Hymnal Project</a> (public domain), drawn with <a href="https://www.abcjs.net/">abcjs</a>.</p>
 <script>
-  /* Tune notation: only runs for songs listed in tunes/songs.json, and only
+  /* Tune notation: only runs for songs listed in music/songs.json, and only
      loads the notation library once the first such song is near the screen. */
   (function () {
     var libPromise = null;
@@ -16943,7 +16943,7 @@
 
     function loadTune(name) {
       if (!tunes[name]) {
-        tunes[name] = fetch("tunes/" + name + ".abc").then(function (r) {
+        tunes[name] = fetch("music/" + name + ".abc").then(function (r) {
           if (!r.ok) throw new Error(name);
           return r.text();
         });
@@ -17018,21 +17018,46 @@
     window.addEventListener("hashchange", function () { setPending(location.hash); });
     setPending(location.hash);
 
-    function drawWith(box, abc, scale, wrap) {
-      ABCJS.renderAbc(box, abc, {
+    function drawWith(box, abc, scale, staffwidth, wrap) {
+      var opts = {
         add_classes: true,
         responsive: "resize",
         scale: scale,
-        staffwidth: box.clientWidth / scale,
-        paddingleft: 0, paddingright: 0, paddingtop: 0, paddingbottom: 0,
-        wrap: wrap
-      });
+        staffwidth: staffwidth,
+        paddingleft: 0, paddingright: 0, paddingtop: 0, paddingbottom: 0
+      };
+      if (wrap) opts.wrap = wrap;
+      ABCJS.renderAbc(box, abc, opts);
     }
 
-    // Spacing is tuned per song and per screen width (see "sp" in
-    // tunes/songs.json): word lengths differ a lot between songs, and a wider
-    // staff can hold more measures per line. Each entry is
-    // [minSpacing, maxSpacing, measures per line, lyric font size].
+    // Build the ABC text. The tune file has one music line per phrase; they
+    // are grouped "perLine" phrases to a staff line (2 = the printed tune's own
+    // lines, 1 = one phrase per line, 0 = everything on one line for the
+    // library to re-break). Whole groups mean every line has the same length.
+    function buildAbc(tuneText, info, font, perLine) {
+      var lines = tuneText.split("\n").filter(function (l) { return l.trim(); });
+      var header = lines.filter(function (l) { return /^[A-Za-z]:/.test(l) && !/^T:/.test(l); });
+      var music = lines.filter(function (l) { return !/^[A-Za-z]:/.test(l); });
+      var g = perLine || music.length;
+      // vocalspace < 0 pulls the words up close under the staff
+      var abc = "%%vocalspace -8\n%%vocalfont Times " + font + " normal\n" +
+        (perLine ? "%%stretchlast 1\n" : "") + header.join("\n") + "\n";
+      for (var start = 0; start < music.length; start += g) {
+        abc += music.slice(start, start + g).join(" ") + "\n";
+        info.w.forEach(function (w, i) {
+          if (w) abc += "w: " + (start === 0 ? (i + 1) + ".~" : "") + w.slice(start, start + g).join(" ") + "\n";
+        });
+      }
+      return abc;
+    }
+
+    // Spacing is tuned per song (see "fit" and "sp" in music/songs.json).
+    //  fit: per grouping (2 or 1 phrases to a line), [staff width, lyric size]
+    //       at which that layout sets cleanly. The widest grouping that fits
+    //       the screen is used (the staff may shrink a little to fit).
+    //  sp:  fallback for narrow screens, where lines must be re-broken. Per
+    //       width band: [minSpacing, maxSpacing, measures per line, lyric size].
+    var SCALE = 0.85, MIN_SCALE = 0.68;
     function band(width) {
       return width < 480 ? "narrow" : width < 760 ? "mid" : width < 900 ? "wide" : "xwide";
     }
@@ -17040,26 +17065,38 @@
 
     function draw(box, info) {
       Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
-        var b = band(box.clientWidth), narrow = b === "narrow";
-        var sp = (info.sp && info.sp[b]) || DEFAULT_SP[b];
-        // vocalspace < 0 pulls the words up close under the staff
-        var abc = "%%vocalspace -8\n%%vocalfont Times " + sp[3] + " normal\n" + res[1].replace(/^T:.*\n/m, "");
-        info.w.forEach(function (w, i) {
-          if (w) abc += "w: " + (i + 1) + ".~" + w + "\n";
+        var hymn = box.parentNode;
+        var avail = hymn.parentNode.clientWidth;
+        var done = false;
+        ["2", "1"].forEach(function (g) {
+          var fit = info.fit && info.fit[g];
+          if (done || !fit) return;
+          var scale = Math.min(SCALE, avail / fit[0]);
+          if (scale < MIN_SCALE) return;
+          // lines of equal length, no wider than they need to be
+          hymn.style.width = Math.min(avail, fit[0] * SCALE) + "px";
+          drawWith(box, buildAbc(res[1], info, fit[1], +g), scale, hymn.clientWidth / scale);
+          done = true;
         });
-        drawWith(box, abc, narrow ? 0.7 : 0.85, { minSpacing: sp[0], maxSpacing: sp[1], preferredMeasuresPerLine: sp[2] });
+        if (!done) {
+          var b = band(avail), narrow = b === "narrow";
+          var sp = (info.sp && info.sp[b]) || DEFAULT_SP[b];
+          hymn.style.width = "";
+          drawWith(box, buildAbc(res[1], info, sp[3], 0), narrow ? 0.7 : SCALE, box.clientWidth / (narrow ? 0.7 : SCALE),
+            { minSpacing: sp[0], maxSpacing: sp[1], preferredMeasuresPerLine: sp[2] });
+        }
         box.style.minHeight = "0";
         layoutStanzas(box.parentNode.querySelector("p.songs"), info.w);
         settle();
         box.setAttribute("role", "img");
-        box.setAttribute("aria-label", "Tune " + info.tune + (info.w[0] ? ", verse 1: " + info.w[0].replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));
+        box.setAttribute("aria-label", "Tune " + info.tune + (info.w[0] ? ", verse 1: " + info.w[0].join(" ").replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));
       }).catch(function () {
         box.remove();
         box.parentNode && box.parentNode.classList.remove("has-tune");
       });
     }
 
-    fetch("tunes/songs.json").then(function (r) {
+    fetch("music/songs.json").then(function (r) {
       return r.ok ? r.json() : {};
     }).then(function (map) {
       var io = new IntersectionObserver(function (entries) {

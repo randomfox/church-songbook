@@ -69,8 +69,29 @@
 
   /* Songs. Each song is an <h2 class="song" id="..."> followed by a
      <p class="songs">; the ids are the anchor targets for #25, #A30, etc. */
+  /* Song heading: number on the left, meter in the middle, tune name on the
+     right. The number is bare text, so it becomes the first grid cell; the
+     two <span>s are the meter and the tune. The outer columns are equal, so
+     the meter sits dead center. */
   h2.song {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    column-gap: 0.75em;
+    align-items: baseline;
     padding-bottom: 1px;
+  }
+  h2.song > span {
+    justify-self: center;
+    text-align: center;
+  }
+  h2.song > span:nth-child(2) {
+    justify-self: end;
+    text-align: right;
+    max-width: 12em; /* long tune names wrap rather than stretch the heading */
+  }
+  /* Sticker songs have no number: <span></span>METER<span></span> */
+  h2.t1, h2.t2 {
+    text-align: center;
   }
   h1, h2.section_header {
     text-align: center;
@@ -83,6 +104,11 @@
   .hymn {
     width: fit-content;
     max-width: 100%;
+    margin-inline: auto;
+  }
+  /* If the heading is wider than the lyrics, keep the lyrics centered. */
+  .hymn > p.songs {
+    width: fit-content;
     margin-inline: auto;
   }
   h1, h2.song, h2.section_header {
@@ -105,7 +131,6 @@
   h2.song > span {
     font-size: 0.65em;
     text-transform: uppercase;
-    padding-left: 1.5em;
   }
   i {
     font-size: 0.9em;
@@ -1004,7 +1029,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s22" id="22">22<span>L.M.  [Hebron—Devotion.</span></h2>
+    <h2 class="song s22" id="22">22<span>L.M.</span><span>[Hebron—Devotion.</span></h2>
     <p class="songs">
         <b>B</b>efore Jehovah's awful throne,<br>
         <span>Ye nations, bow with sacred joy;</span><br>
@@ -1127,7 +1152,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s25" id="25">25<span>C.M.  [Arlington—Memphis.</span></h2>
+    <h2 class="song s25" id="25">25<span>C.M.</span><span>[Arlington—Memphis.</span></h2>
     <p class="songs">
         <b>A</b>m I a soldier of the cross,<br>
         <span>A follower of the Lamb?</span><br>
@@ -1194,7 +1219,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s27" id="27">27<span>Meter 11.  [Expostulation.</span></h2>
+    <h2 class="song s27" id="27">27<span>Meter 11.</span><span>[Expostulation.</span></h2>
     <p class="songs">
         <b>C</b>ome, chilren of Zion, and help us to sing,<br>
         <span>Loud anthems of praise to our Saviour and King,</span><br>
@@ -1552,7 +1577,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s40" id="40">40<span>C.M. [Evening Twilight.</span></h2>
+    <h2 class="song s40" id="40">40<span>C.M.</span><span>[Evening Twilight.</span></h2>
     <p class="songs">
         <b>I</b>'M not ashamed to own my Lord,<br>
         <span>Or to defend His cause,</span><br>
@@ -1578,7 +1603,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s41" id="41">41<span>Meter 7. [King of Glory.</span></h2>
+    <h2 class="song s41" id="41">41<span>Meter 7.</span><span>[King of Glory.</span></h2>
     <p class="songs">
         <b>C</b>ome, ye sinners, come to Jesus;<br>
         <span>Think upon your gracious Lord;</span><br>
@@ -1672,7 +1697,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s44" id="44">44<span>S.M.  [St. Thomas—Aylesbury.</span></h2>
+    <h2 class="song s44" id="44">44<span>S.M.</span><span>[St. Thomas—Aylesbury.</span></h2>
     <p class="songs">
         <b>L</b>ord, at Thy sacred feet,<br>
         <span>With joy would we appear;</span><br>
@@ -2343,7 +2368,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s66" id="66">66<span>Meter 19. [The Church's Desolation.</span></h2>
+    <h2 class="song s66" id="66">66<span>Meter 19.</span><span>[The Church's Desolation.</span></h2>
     <p class="songs">
         <b>Y</b>e nations all, on you I call,<br>
         <span>Come, hear this declaration,</span><br>
@@ -2421,7 +2446,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s67" id="67">67<span>Meter 33. [Zion's Glad Morning.</span></h2>
+    <h2 class="song s67" id="67">67<span>Meter 33.</span><span>[Zion's Glad Morning.</span></h2>
     <p class="songs">
         <b>H</b>ail, the blest morn when the great Mediator,<br>
         <span>Down from the region of glory descends;</span><br>
@@ -2571,7 +2596,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s71" id="71">71<span>Meter 4.  [Dixon—Charleston.</span></h2>
+    <h2 class="song s71" id="71">71<span>Meter 4.</span><span>[Dixon—Charleston.</span></h2>
     <p class="songs">
         <b>H</b>ark! what mean those holy voices,<br>
         <span>Sweetly sounding through the skies?</span><br>
@@ -3255,7 +3280,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s89" id="89">89<span>Meter 22.  [Mount Calvary.</span></h2>
+    <h2 class="song s89" id="89">89<span>Meter 22.</span><span>[Mount Calvary.</span></h2>
     <p class="songs">
         <b>T</b>he Son of Man they did betray,<br>
         <span>He was condemned and led away;</span><br>
@@ -5463,7 +5488,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s149" id="149">149<span>Meter 60.  [Healing Fountain.</span></h2>
+    <h2 class="song s149" id="149">149<span>Meter 60.</span><span>[Healing Fountain.</span></h2>
     <p class="songs">
         <b>S</b>ee the fountain opened wide,<br>
         <span>That from pollution frees us,</span><br>
@@ -5626,7 +5651,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s153" id="153">153<span>Meter 33.  [Star of the East.</span></h2>
+    <h2 class="song s153" id="153">153<span>Meter 33.</span><span>[Star of the East.</span></h2>
     <p class="songs">
         <b>R</b>estless thy spirit, poor wandering sinner,<br>
         <span>restless and roving—O come to thy home!</span><br>
@@ -5921,7 +5946,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s161" id="161">161<span>METER 40. [Boundless Mercy.</span></h2>
+    <h2 class="song s161" id="161">161<span>METER 40.</span><span>[Boundless Mercy.</span></h2>
     <p class="songs">
         <b>D</b>rooping souls, no longer grieve,<br>
         <span>Heaven is propitious;</span><br>
@@ -5998,7 +6023,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s163" id="163">163<span>Meter 56. [Royal Proclamation.</span></h2>
+    <h2 class="song s163" id="163">163<span>Meter 56.</span><span>[Royal Proclamation.</span></h2>
     <p class="songs">
         <b>H</b>ear the royal proclamation,<br>
         <span>The glad tidings of Salvation,</span><br>
@@ -10931,7 +10956,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s299" id="299">299<span>Meter 54. [Voice of Warning.</span></h2>
+    <h2 class="song s299" id="299">299<span>Meter 54.</span><span>[Voice of Warning.</span></h2>
     <p class="songs">
         <b>A</b>h, guilty sinner, ruined by transgression,<br>
         <span>What shall thy doom be, when arrayed in terror,</span><br>
@@ -12007,7 +12032,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s328" id="328">328<span>L.M. [Hebron—Devotion.</span></h2>
+    <h2 class="song s328" id="328">328<span>L.M.</span><span>[Hebron—Devotion.</span></h2>
     <p class="songs">
         <b>O</b> happy day when saints shall meet<br>
         <span>To part no more, the thought is sweet;</span><br>
@@ -12588,7 +12613,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s340" id="340">340<span>Meter 52. [Heavenly Treasure.</span></h2>
+    <h2 class="song s340" id="340">340<span>Meter 52.</span><span>[Heavenly Treasure.</span></h2>
     <p class="songs">
         <b>R</b>eligion! 'tis a glorious treasure,<br>
         <span>The purchase of a Saviour's blood;</span><br>
@@ -13820,7 +13845,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s373" id="373">373<span>Meter 24.  [Gospel Trumpet.</span></h2>
+    <h2 class="song s373" id="373">373<span>Meter 24.</span><span>[Gospel Trumpet.</span></h2>
     <p class="songs">
         <b>H</b>ark! how the Gospel trumpet sounds!<br>
         <span>Thro' all the earth the echo bounds;</span><br>
@@ -14009,7 +14034,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s379" id="379">379<span>Meter 41. [Evening Thought.</span></h2>
+    <h2 class="song s379" id="379">379<span>Meter 41.</span><span>[Evening Thought.</span></h2>
     <p class="songs">
         <b>E</b>re I sleep for every favor,<br>
         <span>This day shown</span><br>
@@ -14752,7 +14777,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song s401" id="401">401<span>Meter 11.  [Expostulation.</span></h2>
+    <h2 class="song s401" id="401">401<span>Meter 11.</span><span>[Expostulation.</span></h2>
     <p class="songs">
         <b>O</b> Zion, afflicted with wave upon wave,<br>
         <span>Whom no man can comfort, whom no man can save;</span><br>
@@ -14811,7 +14836,7 @@
 
     <h1 class="Appendix" id="appendix">Appendix</h1>
     <div class="hymn">
-    <h2 class="song A1" id="A1">Appendix 1<span>C.M.  [Cleansing Fountain.</span></h2>
+    <h2 class="song A1" id="A1">Appendix 1<span>C.M.</span><span>[Cleansing Fountain.</span></h2>
     <p class="songs">
         <b>T</b>here is a fountain filled with blood,<br>
         <span>Drawn from Immanuel's veins;</span><br>
@@ -14841,7 +14866,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song A2" id="A2">Appendix 2<span>Meter 17.  [Rock of Ages.</span></h2>
+    <h2 class="song A2" id="A2">Appendix 2<span>Meter 17.</span><span>[Rock of Ages.</span></h2>
     <p class="songs Appendix">
         <b>R</b>ock of ages, cleft for me,<br>
         <span>Let me hide myself in Thee;</span><br>
@@ -14868,7 +14893,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song A3" id="A3">Appendix 3<span>Meter 27.  [Nearer to Thee.</span></h2>
+    <h2 class="song A3" id="A3">Appendix 3<span>Meter 27.</span><span>[Nearer to Thee.</span></h2>
     <p class="songs Appendix">
         <b>N</b>earer, my God, to Thee,<br>
         <span>Nearer to Thee,</span><br>
@@ -14914,7 +14939,7 @@
     </div>
 
     <div class="hymn">
-    <h2 class="song A4" id="A4">Appendix 4<span>L.M.  [Sweet Hour of Prayer.</span></h2>
+    <h2 class="song A4" id="A4">Appendix 4<span>L.M.</span><span>[Sweet Hour of Prayer.</span></h2>
     <p class="songs Appendix">
         <b>S</b>weet hour of prayer! sweet hour of prayer!<br>
         <span>That calls me from a world of care,</span><br>

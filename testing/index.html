@@ -195,6 +195,29 @@
   .score svg path, .score svg text {
     fill: currentColor;
   }
+  /* Like a printed hymnal: verse 1 is under the notes, the remaining verses
+     are numbered and set flush left under the staff. */
+  .hymn.has-tune > p.songs {
+    width: auto;
+    margin: 0;
+  }
+  .stanza {
+    position: relative;
+    margin-bottom: 0.7em;
+    padding-left: 1.8em;
+  }
+  .stanza > span {
+    padding-left: 2em;
+  }
+  .stanza b {
+    font-size: 1em; /* no drop caps in a hymnal */
+  }
+  .stanza > .vnum {
+    position: absolute;
+    left: 0;
+    padding-left: 0;
+    font-weight: bold;
+  }
   .v1 {
     display: none; /* verse 1 now lives under the notes */
   }
@@ -16925,25 +16948,40 @@
       return tunes[name];
     }
 
-    // Wrap the first stanza (everything up to the first blank line) so it can
-    // be hidden once it is shown under the notes.
-    function hideFirstStanza(p) {
+    // Split the words into numbered stanzas. When verse 1 is set under the
+    // notes, its text is kept (hidden) and numbering starts at 2.
+    function layoutStanzas(p, firstIsUnderNotes) {
       var nodes = Array.prototype.slice.call(p.childNodes);
-      var lastWasBr = false, end = -1;
-      for (var i = 0; i < nodes.length; i++) {
-        var n = nodes[i];
+      var stanzas = [], cur = [], lastWasBr = false;
+      nodes.forEach(function (n) {
+        cur.push(n);
         if (n.nodeName === "BR") {
-          if (lastWasBr) { end = i; break; }
-          lastWasBr = true;
+          if (lastWasBr) { stanzas.push(cur); cur = []; lastWasBr = false; }
+          else lastWasBr = true;
         } else if (n.nodeType !== 3 || n.textContent.trim()) {
           lastWasBr = false;
         }
-      }
-      if (end < 0) return;
-      var wrap = document.createElement("span");
-      wrap.className = "v1";
-      p.insertBefore(wrap, nodes[0]);
-      for (i = 0; i <= end; i++) wrap.appendChild(nodes[i]);
+      });
+      stanzas.push(cur);
+      p.textContent = "";
+      var num = 0;
+      stanzas.forEach(function (nodesOfStanza) {
+        while (nodesOfStanza.length) {
+          var t = nodesOfStanza[nodesOfStanza.length - 1];
+          if (t.nodeName === "BR" || (t.nodeType === 3 && !t.textContent.trim())) nodesOfStanza.pop();
+          else break;
+        }
+        if (!nodesOfStanza.length) return;
+        num++;
+        var d = document.createElement("div");
+        d.className = "stanza" + (num === 1 && firstIsUnderNotes ? " v1" : "");
+        var label = document.createElement("span");
+        label.className = "vnum";
+        label.textContent = num + ".";
+        d.appendChild(label);
+        nodesOfStanza.forEach(function (n) { d.appendChild(n); });
+        p.appendChild(d);
+      });
     }
 
     // Drawing staves changes the page height, which can knock a #25-style
@@ -16980,7 +17018,7 @@
     function draw(box, info) {
       Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
         var abc = res[1].replace(/^T:.*\n/m, "");
-        if (info.w) abc += "w: " + info.w + "\n";
+        if (info.w) abc += "w: 1.~" + info.w + "\n";
         var narrow = box.clientWidth < 480;
         var scale = narrow ? 0.7 : 0.85;
         ABCJS.renderAbc(box, abc, {
@@ -16991,7 +17029,7 @@
           wrap: { minSpacing: 1.8, maxSpacing: 2.7, preferredMeasuresPerLine: narrow ? 2 : 4 }
         });
         box.style.minHeight = "0";
-        if (info.w) hideFirstStanza(box.parentNode.querySelector("p.songs"));
+        layoutStanzas(box.parentNode.querySelector("p.songs"), !!info.w);
         settle();
         box.setAttribute("role", "img");
         box.setAttribute("aria-label", "Tune " + info.tune + (info.w ? ", verse 1: " + info.w.replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));

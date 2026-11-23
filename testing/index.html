@@ -17015,22 +17015,32 @@
     window.addEventListener("hashchange", function () { setPending(location.hash); });
     setPending(location.hash);
 
+    function drawWith(box, abc, scale, wrap) {
+      ABCJS.renderAbc(box, abc, {
+        add_classes: true,
+        responsive: "resize",
+        scale: scale,
+        staffwidth: box.clientWidth / scale,
+        paddingleft: 0, paddingright: 0, paddingtop: 0, paddingbottom: 0,
+        wrap: wrap
+      });
+    }
+
+    // Spacing is tuned per song (see "sp" in tunes/songs.json): word lengths
+    // differ a lot between songs. Each entry is
+    // [minSpacing, maxSpacing, measures per line, lyric font size].
+    var DEFAULT_SP = [1.8, 2.2, 4, 12];
+
     function draw(box, info) {
       Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
+        var narrow = box.clientWidth < 480;
+        var sp = (info.sp && info.sp[narrow ? "narrow" : "wide"]) || (narrow ? [1.8, 2.2, 2, 12] : DEFAULT_SP);
         // vocalspace < 0 pulls the words up close under the staff
-        var abc = "%%vocalspace -8\n" + res[1].replace(/^T:.*\n/m, "");
+        var abc = "%%vocalspace -8\n%%vocalfont Times " + sp[3] + " normal\n" + res[1].replace(/^T:.*\n/m, "");
         info.w.forEach(function (w, i) {
           if (w) abc += "w: " + (i + 1) + ".~" + w + "\n";
         });
-        var narrow = box.clientWidth < 480;
-        var scale = narrow ? 0.7 : 0.85;
-        ABCJS.renderAbc(box, abc, {
-          responsive: "resize",
-          scale: scale,
-          staffwidth: box.clientWidth / scale,
-          paddingleft: 0, paddingright: 0, paddingtop: 0, paddingbottom: 0,
-          wrap: { minSpacing: 1.8, maxSpacing: 2.7, preferredMeasuresPerLine: narrow ? 2 : 4 }
-        });
+        drawWith(box, abc, narrow ? 0.7 : 0.85, { minSpacing: sp[0], maxSpacing: sp[1], preferredMeasuresPerLine: sp[2] });
         box.style.minHeight = "0";
         layoutStanzas(box.parentNode.querySelector("p.songs"), info.w);
         settle();

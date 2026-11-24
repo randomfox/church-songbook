@@ -16920,7 +16920,7 @@
     }
   });
 </script>
-<p class="credits">Tune notation: melodies from the <a href="http://openhymnal.org/">Open Hymnal Project</a> (public domain), drawn with <a href="https://www.abcjs.net/">abcjs</a>.</p>
+<p class="credits">Tune notation: melodies from the <a href="http://openhymnal.org/">Open Hymnal Project</a> (public domain) and the <a href="https://archive.org/details/newharmoniasacra00fun">New Harmonia Sacra, 1876</a> (public domain), drawn with <a href="https://www.abcjs.net/">abcjs</a>.</p>
 <script>
   /* Tune notation: only runs for songs listed in music/songs.json, and only
      loads the notation library once the first such song is near the screen. */
@@ -17040,7 +17040,7 @@
       var music = lines.filter(function (l) { return !/^[A-Za-z]:/.test(l); });
       var g = perLine || music.length;
       // vocalspace < 0 pulls the words up close under the staff
-      var abc = "%%vocalspace -8\n%%vocalfont Times " + font + " normal\n" +
+      var abc = "%%vocalspace -4\n%%vocalfont Times " + font + " normal\n" +
         (perLine ? "%%stretchlast 1\n" : "") + header.join("\n") + "\n";
       for (var start = 0; start < music.length; start += g) {
         abc += music.slice(start, start + g).join(" ") + "\n";

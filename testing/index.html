@@ -189,7 +189,7 @@
   .score {
     color: var(--fg);
     min-height: 9em; /* reserved until the staff is drawn */
-    margin: 0.25em 0 0.75em;
+    margin: 0.25em 0 1.25em;
   }
   /* Songs that list two tunes: the names in the heading switch between them. */
   .tune button {
@@ -207,6 +207,9 @@
     color: inherit;
     text-decoration: none;
     cursor: default;
+  }
+  .score, .score svg {
+    overflow: visible !important; /* a chorus can hang below the staff */
   }
   .score svg {
     display: block;
@@ -5717,7 +5720,7 @@
         <span>In vehement love, to sinners, He cries,</span><br>
         "Drink into my Spirit who happy would be,<br>
         <span>And all things inherit by coming to me."</span><br>
-        <brt>
+        <br>
         O Saviour of all, Thy Word we believe,<br>
         <span>And come at Thy call, Thy grace to receive;</span><br>
         The blessing is given wherever Thou art:<br>
@@ -16869,7 +16872,7 @@
         Came her drooping heart to cheer,<br>
         <span>Kindly asking, why she grieved;</span><br>
         Though at first she knew Him not,<br>
-        <span>When He called her by her name,<span><br>
+        <span>When He called her by her name,</span><br>
         She her heavy grief forgot,<br>
         <span>For she found Him still the same.</span><br>
         <br>
@@ -16960,7 +16963,7 @@
 
     function loadTune(name) {
       if (!tunes[name]) {
-        tunes[name] = fetch("music/" + name + ".abc").then(function (r) {
+        tunes[name] = fetch("music/" + encodeURIComponent(name) + ".abc").then(function (r) {
           if (!r.ok) throw new Error(name);
           return r.text();
         });
@@ -17155,7 +17158,7 @@
       span.textContent = "";
       parts.forEach(function (part) {
         var name = part.replace(/^\s*\[|[.\s]+$/g, "").trim();
-        var choice = choices.filter(function (c) { return c.tune === name.toLowerCase(); })[0];
+        var choice = choices.filter(function (c) { return (c.name || c.tune) === name.toLowerCase(); })[0];
         if (!choice) { span.appendChild(document.createTextNode(part)); return; }
         var at = part.indexOf(name);
         var b = document.createElement("button");

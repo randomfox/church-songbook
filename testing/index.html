@@ -17062,7 +17062,7 @@
       var music = lines.filter(function (l) { return !/^[A-Za-z]:/.test(l); });
       var g = perLine || music.length;
       // vocalspace < 0 pulls the words up close under the staff
-      var abc = "%%vocalspace -4\n%%vocalfont Times " + font + " normal\n" +
+      var abc = "%%vocalspace -4\n%%vocalfont Times " + font + "\n" +
         (perLine ? "%%stretchlast 1\n" : "") + header.join("\n") + "\n";
       for (var start = 0; start < music.length; start += g) {
         abc += music.slice(start, start + g).join(" ") + "\n";

@@ -1673,7 +1673,60 @@
     518,
     12
    ]
-  }
+  },
+  "alts": [
+   {
+    "tune": "solon",
+    "w": [
+     [
+      "A- * wake, my  * heart, a-rise, my  * tongue,",
+      "Pre- * pare a  * tune-ful  * voice;",
+      "In God, the  * life of  * all my  * joys,",
+      "A- * loud will  * I re-joice."
+     ],
+     [
+      "'Tis  * He a- * dorned my sin-ful  * soul,",
+      "And  * made sal- * va-tion  * mine;",
+      "Up-on a  * poor, pol- * lut-ed  * worm,",
+      "He  * makes His  * grac-es shine."
+     ],
+     [
+      "And,  * lest the  * shad-ow of a  * spot",
+      "Should  * on my  * soul be  * found,",
+      "He took the  * robe the  * Sav-iour  * wrought,",
+      "And  * cast it  * all a-round."
+     ],
+     [
+      "How  * far the  * heav'n-ly robe ex- * ceeds",
+      "What  * earth-ly  * princ-es  * wear!",
+      "These or-na- * ments, how  * bright they  * shine!",
+      "How  * white the  * gar-ments are!"
+     ],
+     [
+      "The  * spir-it  * wrought by faith and  * love,",
+      "And  * hope, and  * ev-'ry  * grace;",
+      "But Je-sus  * spent His  * life to  * work",
+      "The  * robe of  * righ-teous-ness."
+     ],
+     [
+      "Strange- * ly, my  * soul, art thou ar- * rayed",
+      "By  * the great  * sa-cred  * THREE!",
+      "In sweet-est  * har-mo- * ny of  * praise",
+      "Let  * all thy  * pow'rs a-gree."
+     ]
+    ],
+    "fit": {
+     "1": [
+      863,
+      12
+     ],
+     "2": [
+      1434,
+      12
+     ]
+    }
+   }
+  ]
  },
  "22": {
   "tune": "hebron",
@@ -1718,7 +1771,54 @@
     590,
     12
    ]
-  }
+  },
+  "alts": [
+   {
+    "tune": "devotion",
+    "w": [
+     [
+      "Be-fore Je-ho-vah's aw-ful throne,",
+      "Ye na-tions, bow with sa- * cred joy;",
+      "Know that the Lord is God a- * lone;",
+      "He can cre-ate and He de-stroy."
+     ],
+     [
+      "His sov-'reign pow'r, with-out our aid,",
+      "Made us of clay and formed  * us men;",
+      "And when like wan-d'ring sheep we  * stray'd,",
+      "He brought us to His fold a-gain."
+     ],
+     [
+      "We are His peo-ple, we His care,",
+      "Our souls, and all our mor- * tal frame;",
+      "What last-ing hon-or shall we  * raise,",
+      "Al-might-y Mak-er, to Thy name!"
+     ],
+     [
+      "We'll crowd Thy gates with thank-ful songs,",
+      "High as the heav'ns our voic- * es raise:",
+      "And earth with her ten thou-sand  * tongues,",
+      "Shall fill Thy courts with sound-ing praise."
+     ],
+     [
+      "Wide as the world is Thy com-mand,",
+      "Vast as e-ter-ni-ty  * Thy love;",
+      "Firm as a rock Thy truth must  * stand,",
+      "When roll-ing years shall cease to move."
+     ]
+    ],
+    "fit": {
+     "1": [
+      590,
+      12
+     ],
+     "2": [
+      1114,
+      12
+     ]
+    }
+   }
+  ]
  },
  "33": {
   "tune": "balerma",
@@ -1904,7 +2004,60 @@
     783,
     12
    ]
-  }
+  },
+  "alts": [
+   {
+    "tune": "balerma",
+    "w": [
+     [
+      "Let the whole race of crea-tures lie",
+      "A-based be-fore  * their God:",
+      "What-e'er His sov-'reign voice has formed,",
+      "He gov- * erns with  * a rod."
+     ],
+     [
+      "[Ten thou-sand ag-es ere the skies",
+      "Were in-to mo- * tion brought,",
+      "All the long years and worlds to come,",
+      "Stood pre- * sent to  * His thought."
+     ],
+     [
+      "There's not a spar-row or a worm,",
+      "Not found in His  * de-crees;",
+      "He rais-es mon-archs to their thrones,",
+      "And sinks  * them as  * He please.]"
+     ],
+     [
+      "If light at-tends the course I run,",
+      "'Tis He pro-vides  * those rays\"",
+      "And 'tis His hand that hides my sun,",
+      "If dark- * ness cloud  * my days."
+     ],
+     [
+      "Yet I would not be much con-cerned,",
+      "Nor vain-ly long  * to see",
+      "The vol-umes of His deep de-crees,",
+      "What months  * are writ  * for me."
+     ],
+     [
+      "When He re-veals the Book of Life,",
+      "O, may I read  * my name",
+      "A-mong the cho-sen of His love,",
+      "The fol- * l'wers of  * the Lamb."
+     ]
+    ],
+    "fit": {
+     "1": [
+      545,
+      12
+     ],
+     "2": [
+      916,
+      12
+     ]
+    }
+   }
+  ]
  },
  "100": {
   "tune": "mear",
@@ -2531,7 +2684,66 @@
     571,
     12
    ]
-  }
+  },
+  "alts": [
+   {
+    "tune": "devotion",
+    "w": [
+     [
+      "Sweet is the work, my God, my King,",
+      "To praise Thy name, give thanks  * and sing;",
+      "To show Thy love by morn-ing  * light,",
+      "And talk of all Thy truth at night."
+     ],
+     [
+      "Sweet is the day of sa-cred rest;",
+      "No mor-tal cares shall seize  * my breast;",
+      "O may my heart in tune be  * found,",
+      "Like Da-vid's harp, of sol-emn sound."
+     ],
+     [
+      "My heart shall tri-umph in my Lord,",
+      "And bless His works, and bless  * His Word:",
+      "Thy works of grace, how bright they  * shine!",
+      "How deep Thy coun-els! How di-vine!"
+     ],
+     [
+      "Fools nev-er raise their thoughts so high;",
+      "Like brutes they live, like brutes  * they die;",
+      "Like grass they flour-ish, till Thy  * breath",
+      "Blasts them in ev-er-last-ing death."
+     ],
+     [
+      "But I shall share a glo-rious part",
+      "When grace hath well re-fined  * my heart;",
+      "And fresh sup-plies of joy are  * shed,",
+      "Like ho-ly oil, to cheer my head."
+     ],
+     [
+      "Sin (my worst en-e-my be-fore),",
+      "Shall vex my eyes and ears  * no more;",
+      "My in-ward foes shall all be  * slain,",
+      "Nor Sa-tan break my peace a-gain."
+     ],
+     [
+      "Then shall I see, and hear, and know",
+      "All I de-sired or wished  * be-low;",
+      "And ev-'ry pow'r find sweet em- * ploy",
+      "In that e-ter-nal world of joy."
+     ]
+    ],
+    "fit": {
+     "1": [
+      571,
+      12
+     ],
+     "2": [
+      1075,
+      12
+     ]
+    }
+   }
+  ]
  },
  "186": {
   "tune": "mear",
@@ -3947,7 +4159,60 @@
     590,
     12
    ]
-  }
+  },
+  "alts": [
+   {
+    "tune": "devotion",
+    "w": [
+     [
+      "O hap-py day when saints shall meet",
+      "To part no more, the thought  * is sweet;",
+      "No more to feel the rend-ing  * smart",
+      "Oft felt be-low, when Chris-tians part."
+     ],
+     [
+      "O hap-py place! I still must say,",
+      "Where all but love is done  * a-way;",
+      "All cause of part-ing there is  * past;",
+      "There so-cial feast will ev-er last."
+     ],
+     [
+      "Such u-nion here is sought in vain,",
+      "As there in ev-'ry heart  * will reign,",
+      "There sep-a-ra-tion can't com- * pel",
+      "The saints to bid the sad fare-well."
+     ],
+     [
+      "On earth when friends to-geth-er meet,",
+      "And find the pass-ing mo- * ments sweet,",
+      "Time's ra-pid mo-tions soon com- * pel,",
+      "With grief to say— dear friends, fare-well."
+     ],
+     [
+      "The shep-herd feels the smart-ing shock,",
+      "Of part-ing from his weep- * ing flock;",
+      "His feel-ings for them none can  * tell,",
+      "When forced to say— my friends, fare-well."
+     ],
+     [
+      "The hap-py sea-son soon will come,",
+      "When saints shall meet in heav'n  * their home;",
+      "E-ter-nal-ly with Christ to  * dwell,",
+      "Nor ev-er hear the sound, fare-well."
+     ]
+    ],
+    "fit": {
+     "1": [
+      590,
+      12
+     ],
+     "2": [
+      1114,
+      12
+     ]
+    }
+   }
+  ]
  },
  "329": {
   "tune": "mear",

@@ -191,6 +191,23 @@
     min-height: 9em; /* reserved until the staff is drawn */
     margin: 0.25em 0 0.75em;
   }
+  /* Songs that list two tunes: the names in the heading switch between them. */
+  .tune button {
+    font: inherit;
+    text-transform: inherit;
+    color: var(--link);
+    background: none;
+    border: 0;
+    padding: 0.4em 0.1em;
+    margin: -0.4em 0;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .tune button[aria-pressed="true"] {
+    color: inherit;
+    text-decoration: none;
+    cursor: default;
+  }
   .score svg {
     display: block;
     width: 100%;
@@ -16954,6 +16971,11 @@
     // Split the words into numbered stanzas. A stanza that is set under the
     // notes keeps its text (hidden); the others are shown below the staff.
     function layoutStanzas(p, underlay) {
+      var done = p.querySelectorAll(".stanza");
+      if (done.length) { // already split: the tune was switched
+        done.forEach(function (d, i) { d.classList.toggle("v1", !!underlay[i]); });
+        return;
+      }
       var nodes = Array.prototype.slice.call(p.childNodes);
       var stanzas = [], cur = [], lastWasBr = false;
       nodes.forEach(function (n) {
@@ -17064,7 +17086,8 @@
     var DEFAULT_SP = { narrow: [1.8, 2.2, 2, 11], mid: [1.8, 2.2, 3, 12], wide: [1.8, 2.2, 4, 12], xwide: [1.8, 2.2, 5, 12] };
 
     function draw(box, info) {
-      Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
+      return Promise.all([loadLib(), loadTune(info.tune)]).then(function (res) {
+        if (box._info !== info) return; // switched again while loading
         var hymn = box.parentNode;
         var avail = hymn.parentNode.clientWidth;
         var done = false;
@@ -17085,15 +17108,62 @@
           drawWith(box, buildAbc(res[1], info, sp[3], 0), narrow ? 0.7 : SCALE, box.clientWidth / (narrow ? 0.7 : SCALE),
             { minSpacing: sp[0], maxSpacing: sp[1], preferredMeasuresPerLine: sp[2] });
         }
+        box._drawn = true;
+        box._shown = info;
         box.style.minHeight = "0";
         layoutStanzas(box.parentNode.querySelector("p.songs"), info.w);
         settle();
         box.setAttribute("role", "img");
         box.setAttribute("aria-label", "Tune " + info.tune + (info.w[0] ? ", verse 1: " + info.w[0].join(" ").replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));
       }).catch(function () {
+        if (box._drawn) return; // a failed switch leaves the old staff up
+        var hymn = box.parentNode;
+        if (!hymn) return;
         box.remove();
-        box.parentNode && box.parentNode.classList.remove("has-tune");
+        hymn.classList.remove("has-tune");
+        hymn.style.width = "";
       });
+    }
+
+    // "[Hebron—Devotion." becomes two buttons when there is music for both.
+    function addSwitch(h, box, info) {
+      if (!info.alts || !info.alts.length) return;
+      var span = h.querySelector(".tune");
+      var choices = [info].concat(info.alts);
+      var buttons = [];
+      function show(choice) {
+        if (box._info === choice) return;
+        var head = h.querySelector("h2.song"), top = head.getBoundingClientRect().top;
+        var prev = box._info;
+        box._info = choice;
+        mark();
+        draw(box, choice).then(function () {
+          if (box._info !== choice) return;
+          if (box._shown !== choice) { box._info = prev; mark(); return; }
+          window.scrollBy(0, head.getBoundingClientRect().top - top);
+        });
+      }
+      function mark() {
+        buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b._choice === box._info)); });
+      }
+      var parts = span.textContent.split(/([\u2014\u2013])/);
+      span.textContent = "";
+      parts.forEach(function (part) {
+        var name = part.replace(/^\s*\[|[.\s]+$/g, "").trim();
+        var choice = choices.filter(function (c) { return c.tune === name.toLowerCase(); })[0];
+        if (!choice) { span.appendChild(document.createTextNode(part)); return; }
+        var at = part.indexOf(name);
+        var b = document.createElement("button");
+        b.type = "button";
+        b.textContent = name;
+        b._choice = choice;
+        b.addEventListener("click", function () { show(choice); });
+        buttons.push(b);
+        span.appendChild(document.createTextNode(part.slice(0, at)));
+        span.appendChild(b);
+        span.appendChild(document.createTextNode(part.slice(at + name.length)));
+      });
+      mark();
     }
 
     fetch("music/songs.json").then(function (r) {
@@ -17115,6 +17185,7 @@
         box._info = info;
         h.classList.add("has-tune");
         h.insertBefore(box, h.querySelector("p.songs"));
+        addSwitch(h, box, info);
         io.observe(box);
       });
       settle(); // the placeholders moved the jump target

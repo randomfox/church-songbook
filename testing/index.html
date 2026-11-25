@@ -347,7 +347,7 @@
     <h2 class="song s2" id="2"><span class="num">2</span><span class="meter">C.M.</span><span class="tune">[Jerome.</span></h2>
     <p class="songs">
         <b>H</b>ow shall we praise th' Eternal God,<br>
-        <span>That infinite Unknown?<br></span>
+        <span>That infinite Unknown?</span><br>
         Who can ascend His high abode,<br>
         <span>Or venture near His throne?</span><br>
         <br>
@@ -662,7 +662,7 @@
         Who knows the wonders of Thy ways?<br>
         <span>Who shall fulfill Thy boundless praise?</span><br>
         Blessed are the souls that fear Thee still,<br>
-        <span>And pay their duty to Thy will.</span>
+        <span>And pay their duty to Thy will.</span><br>
         <br>
         Remember what Thy mercy did<br>
         <span>For Jacob's race, Thy chosen seed:</span><br>
@@ -16937,7 +16937,7 @@
     }
   });
 </script>
-<p class="credits">Tune notation: melodies from the <a href="http://openhymnal.org/">Open Hymnal Project</a> (public domain) and the <a href="https://archive.org/details/newharmoniasacra00fun">New Harmonia Sacra, 1876</a> (public domain), drawn with <a href="https://www.abcjs.net/">abcjs</a>.</p>
+<p class="credits">Tune notation: melodies from the <a href="http://openhymnal.org/">Open Hymnal Project</a> (public domain) and the <a href="https://archive.org/details/newharmoniasacra00fun">New Harmonia Sacra, 1876</a> and <a href="https://archive.org/details/philharmoniacollweng">The Philharmonia, 1875</a> (public domain), drawn with <a href="https://www.abcjs.net/">abcjs</a>.</p>
 <script>
   /* Tune notation: only runs for songs listed in music/songs.json, and only
      loads the notation library once the first such song is near the screen. */
@@ -16997,12 +16997,13 @@
           else break;
         }
         if (!nodesOfStanza.length) return;
-        num++;
+        var chorus = /^\s*(chorus|refrain)/i.test(nodesOfStanza.map(function (n) { return n.textContent; }).join(""));
+        if (!chorus) num++;
         var d = document.createElement("div");
         d.className = "stanza" + (underlay[idx] ? " v1" : "");
         var label = document.createElement("span");
         label.className = "vnum";
-        label.textContent = num + ".";
+        label.textContent = chorus ? "" : num + ".";
         d.appendChild(label);
         nodesOfStanza.forEach(function (n) { d.appendChild(n); });
         p.appendChild(d);
@@ -17067,7 +17068,11 @@
       for (var start = 0; start < music.length; start += g) {
         abc += music.slice(start, start + g).join(" ") + "\n";
         info.w.forEach(function (w, i) {
-          if (w) abc += "w: " + (start === 0 ? (i + 1) + ".~" : "") + w.slice(start, start + g).join(" ") + "\n";
+          // "*" leaves the notes of a phrase this verse does not sing empty
+          var words = w.slice(start, start + g).map(function (t, k) {
+            return t || new Array((info.s || [])[start + k] + 1).join("* ");
+          }).join(" ");
+          abc += "w: " + (start === 0 && info.n[i] ? info.n[i] + "~" : "") + words + "\n";
         });
       }
       return abc;
@@ -17111,7 +17116,7 @@
         box._drawn = true;
         box._shown = info;
         box.style.minHeight = "0";
-        layoutStanzas(box.parentNode.querySelector("p.songs"), info.w);
+        layoutStanzas(box.parentNode.querySelector("p.songs"), info.hid);
         settle();
         box.setAttribute("role", "img");
         box.setAttribute("aria-label", "Tune " + info.tune + (info.w[0] ? ", verse 1: " + info.w[0].join(" ").replace(/[*~]|-\s*/g, " ").replace(/\s+/g, " ").trim() : ""));
